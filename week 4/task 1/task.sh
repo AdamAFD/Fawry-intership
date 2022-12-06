@@ -1,16 +1,18 @@
 #!/bin/bash
 
 
-echo "enter your appname"
-
+echo "enter your app-name"
 APP_NAME=$1
 
+echo "enter your repo-name"
+repo_name=$2
+
 echo "enter your app-url"
-REPO_URL=$2
+REPO_URL=$3
 
-echo "enter your linux user"
+echo "enter your linux-user"
+usernamee=$4
 
-usernamee=$3
 
 HTTPS_REPO_URL="https://$(echo  $REPO_URL | sed 's~http[s]*://~~g')"
 
@@ -25,6 +27,7 @@ mkdir $APP_NAME
 cd  ./$APP_NAME
 
 git clone $HTTPS_REPO_URL
+cd $repo_name
 
 git checkout main
 
