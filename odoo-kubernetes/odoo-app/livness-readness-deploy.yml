@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odoo-deployment
+  labels:
+    app: odoo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: odoo
+  template:
+    metadata:
+      labels:
+        app: odoo
+    spec:
+      containers:
+      - name: odoo
+        image: testmailqwer/odo:14
+        ports:
+        - containerPort: 8069
+        #liveness,readness
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8069
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8069
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        startupProbe:
+          httpGet:
+            path: /
+            port: 8069
+          failureThreshold: 5
+          periodSeconds: 5
+          
+        env:
+        - name: HOST
+          value: postgres
+        - name: USER
+          value: admin
+        - name: PASSWORD
+          value: root
